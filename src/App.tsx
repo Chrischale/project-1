@@ -1,14 +1,19 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { TitleComponent } from './Components/TitleComponent/TitleComponent';
+import { NavBarComponent } from './Components/NavBarComponent/NavBarComponent';
+import Button from '@material-ui/core/Button'
+
 
 function App() {
   return (
     <div className="App">
+      <NavBarComponent/>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Employee Reimbursement System
         </p>
         <a
           className="App-link"
@@ -16,9 +21,11 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
         </a>
+        <Button variant = 'contained' color = 'primary'> Please Login </Button>
+      
       </header>
+      
     </div>
   );
 }
