@@ -4,6 +4,8 @@ import './App.css';
 import { TitleComponent } from './Components/TitleComponent/TitleComponent';
 import { NavBarComponent } from './Components/NavBarComponent/NavBarComponent';
 import Button from '@material-ui/core/Button'
+import { StatefulComponent } from './Components/ClickerComponent/ClickerComponent';
+import { LoginComponent } from './Components/LoginComponent/LoginComponent';
 
 
 function App() {
@@ -26,6 +28,7 @@ function App() {
       
       </header>
       
+      <LoginComponent/>
     </div>
   );
 }
