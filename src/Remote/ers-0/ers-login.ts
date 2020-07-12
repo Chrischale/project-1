@@ -1,4 +1,5 @@
 import { ersClient } from "."
+import { User } from "../../Models/Users"
 
 
 export const ersLogin = async (username:String, password:String) => {
@@ -9,6 +10,8 @@ export const ersLogin = async (username:String, password:String) => {
 
     try{
         let response =  await ersClient.post('/login', credentials)
+        console.log(response)
+        return response.data 
 
     }catch (err) {
         console.log(err)

@@ -4,21 +4,33 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
 
-import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Link, Redirect } from 'react-router-dom';
 
 
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme:Theme) => ({
     root: {
       flexGrow: 1,
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -86,40 +98,47 @@ export const NavBarComponent: FunctionComponent <any> = (props) =>{
         setAnchorEl(null);
     };
 
+    //defult menu always has login
+    let menuItems = [<MenuItem onClick={handleClose}><Link to='/login'>Login</Link></MenuItem>]
+    if(props.user){
+        menuItems.push(<MenuItem onClick={handleClose}><Link to='/home'>Home</Link></MenuItem>,
+        <MenuItem onClick={handleClose}> <Link to={`/profile/${props.user?.userId}`}>My Profile</Link></MenuItem>)
+    }
+
+    if(props.user && props.user.role === 'Finance Manager'){
+      menuItems.push(<MenuItem onClick={handleClose}> <Link to='/users'>All Users</Link></MenuItem>)
+      
+    }
+
     return (
+
         <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
             <IconButton
+                onClick={handleClick}
                 edge="start"
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="open drawer"
                 aria-controls="simple-menu" 
                 aria-haspopup="true" 
-                onClick={handleClick}
+                
             >
-                <MenuIcon />
+              <MenuIcon />
+            </IconButton>
 
-                <Menu
+            <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-            </IconButton>
-
-            
-
-
+                onClose={handleClose}>
+                {menuItems}
+            </Menu>
 
             <Typography className={classes.title} variant="h6" noWrap>
-                Material-UI
+              ERS
             </Typography>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
@@ -133,10 +152,13 @@ export const NavBarComponent: FunctionComponent <any> = (props) =>{
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 />
+                
             </div>
+             
             </Toolbar>
         </AppBar>
         </div>
+        
     );
 
 }
